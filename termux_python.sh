@@ -9,6 +9,16 @@ pkg-config --cflags freetype2
 pip config set global.index-url https://pypi.tuna.tsinghua.edu.cn/simple
 pip install jupyter sympy control networkx
 
+touch config.py
+echo "from notebook.auth import passwd" >> config.py
+echo "print(\"c.NotebookApp.password = u'\"+passwd(\"admin\")+\"'\")" >> config.py
+python config.py >> ~/.jupyter/jupyter_notebook_config.py
+echo "c.NotebookApp.ip='*'" >> ~/.jupyter/jupyter_notebook_config.py
+echo "c.NotebookApp.open_browser = False" >> ~/.jupyter/jupyter_notebook_config.py
+echo "c.NotebookApp.port =8888" >> ~/.jupyter/jupyter_notebook_config.py
+echo "c.NotebookApp.allow_remote_access = True" >> ~/.jupyter/jupyter_notebook_config.py
+rm config.py
+
 LDFLAGS=" -lm -lcompiler_rt" pip install cython
 LDFLAGS="-L/system/lib/ -lm -lcompiler_rt" pip install Pillow --global-option="build_ext"
 LDFLAGS=" -lm -lcompiler_rt" pip install matplotlib
